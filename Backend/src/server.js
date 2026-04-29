@@ -3,6 +3,7 @@ import express from "express";
 import authRoutes from "./routes/auth.route.js";
 import messageRoute from "./routes/message.route.js";
 import cors from "cors";
+import { connectDb } from "./lib/db.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -14,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(cors({
-  origin: "https://your-frontend.vercel.app", // update later
+  origin: "https://chat-application-61p2v0v36-yashwanths-projects-18cdfc80.vercel.app/", // update later
   credentials: true
 }));
 
@@ -28,5 +29,6 @@ app.get("/", (req, res) => {
 
 app.listen(process.env.PORT,()=>{
     console.log(`Server Running On Port ${process.env.PORT}`)
+    connectDb()
 })
 
