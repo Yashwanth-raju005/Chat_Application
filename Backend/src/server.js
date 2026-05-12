@@ -3,6 +3,7 @@ import express from "express";
 import authRoutes from "./routes/auth.route.js";
 import messageRoute from "./routes/message.route.js";
 import cors from "cors";
+import cookieParser from "cookie-parser"
 import { connectDb } from "./lib/db.js";
 
 import path from "path";
@@ -20,6 +21,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api/auth",authRoutes)
 app.use("/api/messages",messageRoute)
 
