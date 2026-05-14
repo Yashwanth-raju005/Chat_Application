@@ -16,7 +16,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(cors({
-  origin: "https://chat-application-61p2v0v36-yashwanths-projects-18cdfc80.vercel.app/", // update later
+  origin: "https://chat-application-61p2v0v36-yashwanths-projects-18cdfc80.vercel.app", // update later
   credentials: true
 }));
 
