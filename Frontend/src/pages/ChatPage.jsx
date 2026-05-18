@@ -1,9 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
+import { useAuthStore } from "../store/useAuthStore.js";
 
 const ChatPage = () => {
+  const {logout} = useAuthStore()
   return (
-    <div>ChatPage</div>
+    <div className='z-10'>
+      ChatPage
+      <button onClick={logout}>logout</button>
+    </div>
   )
 }
 
