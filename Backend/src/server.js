@@ -8,10 +8,11 @@ import { connectDb } from "./lib/db.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
+import { app, server } from "./lib/socket.js";
 
 dotenv.config()
 
-const app = express();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -32,7 +33,7 @@ app.get("/", (req, res) => {
   res.send("API is running 🚀");
 });
 
-app.listen(process.env.PORT,()=>{
+server.listen(process.env.PORT,()=>{
     console.log(`Server Running On Port ${process.env.PORT}`)
     connectDb()
 })
