@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { LogOutIcon, VolumeOffIcon, Volume2Icon, Loader } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
+import toast from "react-hot-toast";
 
 const mouseClickSound = new Audio("../../public/sounds/mouse-click.mp3")
 
@@ -16,7 +17,10 @@ const ProfileHeader = () => {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
 
-    if(!file) return
+    if(!file.type.startsWith("image/")) {
+      toast.error("Please Select an Image File")
+      return;
+    }
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onloadend = async () =>{
