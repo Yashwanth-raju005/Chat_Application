@@ -4,8 +4,7 @@ import { axiosInstance } from "../lib/axios.js";
 import { toast } from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const BASE_URL =
-  import.meta.env.MODE === "development" ? "http://localhost:3000" : "/";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -14,13 +13,13 @@ export const useAuthStore = create((set, get) => ({
   isLoggingIn: false,
   isUpdating: false,
   socket: null,
-  onlineUsers:[],
+  onlineUsers: [],
 
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("/auth/check");
       set({ authUser: res.data });
-      get().connectSocket()
+      get().connectSocket();
     } catch (error) {
       console.log("Error In authCheck", error);
       set({ authUser: null });
@@ -36,7 +35,7 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       //toast
       toast.success("Account Created Successfully");
-      get().connectSocket()
+      get().connectSocket();
     } catch (error) {
       toast.error(error.response.data.message);
       set({ isSigningUp: false });
@@ -52,7 +51,7 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       //toast
       toast.success("Logged In Successfully");
-      get().connectSocket()
+      get().connectSocket();
     } catch (error) {
       toast.error(error.response.data.message);
       set({ isLoggingIn: false });
@@ -66,7 +65,7 @@ export const useAuthStore = create((set, get) => ({
       await axiosInstance.post("/auth/logout");
       set({ authUser: null });
       toast.success("Logged Out SuccessFully");
-      get().disconnectSocket()  
+      get().disconnectSocket();
     } catch (error) {
       toast.error("Error Logging out");
       console.log();
@@ -91,7 +90,10 @@ export const useAuthStore = create((set, get) => ({
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
 
-    const socket = io(BASE_URL, { withCredentials: true });
+    const socket = io(BASE_URL, {
+      withCredentials: true,
+      transports: ["websocket", "polling"],
+    });
 
     socket.connect();
 
@@ -105,5 +107,4 @@ export const useAuthStore = create((set, get) => ({
   disconnectSocket: () => {
     if (get().socket?.connected) get().socket.disconnect();
   },
-
 }));
