@@ -43,7 +43,7 @@ const ProfileHeader = () => {
                 src={
                   selectedImg ||
                   authUser.profilePic ||
-                  "../../public/avatar.png"
+                  "/avatar.png"
                 }
                 className="size-full object-cover"
                 alt="User Img"
